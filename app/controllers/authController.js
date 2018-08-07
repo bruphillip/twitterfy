@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const sendMail = require('../services/mailer');
 
 const User = mongoose.model('User');
 
@@ -29,6 +30,13 @@ module.exports = {
         return res.status(400).json({ error: 'User already exists' });
       }
       const user = await User.create(req.body);
+
+      await sendMail({
+        from: 'bruni.felipe@hotmail.com',
+        to: user.email,
+        subject: `Bem vindo ao Twitterfy ${user.name}`,
+        html: `Seja bem vindo ao Twitterfy faça login com sua conta: ${user.username}`,
+      });
 
       return res.json({ user, token: user.generateToken() });
     } catch (err) {

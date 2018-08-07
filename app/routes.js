@@ -18,7 +18,15 @@ routes.use(authMiddleware);
 /**
  * Users
  */
+routes.get('/users/me', controllers.userController.me);
 routes.put('/users', controllers.userController.update);
+routes.get('/feed', controllers.userController.feed);
+
+/**
+ * Follows
+ */
+routes.post('/follow/:id', controllers.followController.create);
+routes.delete('/unfollow/:id', controllers.followController.destroy);
 
 /**
  * Tweets
@@ -26,5 +34,10 @@ routes.put('/users', controllers.userController.update);
 
 routes.post('/tweets', controllers.tweetController.create);
 routes.delete('/tweets/:id', controllers.tweetController.destroy);
+
+/**
+ * Likes
+ */
+routes.post('/like/:id', controllers.likeController.toogle);
 
 module.exports = routes;
