@@ -35,7 +35,11 @@ module.exports = {
         from: 'bruni.felipe@hotmail.com',
         to: user.email,
         subject: `Bem vindo ao Twitterfy ${user.name}`,
-        html: `Seja bem vindo ao Twitterfy faça login com sua conta: ${user.username}`,
+        template: 'auth/register',
+        context: {
+          name: user.name,
+          username: user.username,
+        }
       });
 
       return res.json({ user, token: user.generateToken() });
